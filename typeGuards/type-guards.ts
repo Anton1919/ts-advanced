@@ -31,7 +31,7 @@ function submitForm() {
         //...
     } catch (error) {
         if (isErrorResponse(error)) {
-            // ...
+            // ^?
         }
 
         console.log(error);
