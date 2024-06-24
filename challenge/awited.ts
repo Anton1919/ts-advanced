@@ -15,3 +15,4 @@ type MyAwaited<T> = any;
 type ExampleType = Promise<string>;
 
 type Res = MyAwaited<ExampleType>; // string
+//
