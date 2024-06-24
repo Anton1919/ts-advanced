@@ -4,15 +4,24 @@
 
 // For example: if we have `Promise<ExampleType>` how to get ExampleType?
 
-// ```ts
-// type ExampleType = Promise<string>
+type ExampleType = Promise<string>
 
-// type Result = MyAwaited<ExampleType> // string
-// ```
+type MyAwaited<T extends PromiseLike<any>> = T extends PromiseLike<infer U>
+    ? U extends PromiseLike<any>
+        ? MyAwaited<U>
+        : U
+    : never;
 
-type MyAwaited<T> = any;
+type Result1 = MyAwaited<ExampleType>
 
-type ExampleType = Promise<string>;
+// Example with function:
+type IData = {
+    title: string
+}
 
-type Res = MyAwaited<ExampleType>; // string
-//
+async function getData(): Promise<IData[]> {
+    return [{ title: 'Data' }];
+}
+
+type R = Awaited<ReturnType<typeof getData>>; // type R = IData[], а без awaited был бы тип такой type R = Promise<IData[]>
+
